@@ -9,7 +9,7 @@ import bestan.common.module.ModuleManager;
 import bestan.common.thread.BThreadPoolExecutors;
 import bestan.common.timer.BTimer.TimerModule;
 import bgame.common.message.GameMessageEnum;
-import bgame.db.config.DBServerConfig;
+import bgame.db.config.server.DBServerConfig;
 
 public class MainServer {
 	private static AtomicBoolean runState = new AtomicBoolean(true);
