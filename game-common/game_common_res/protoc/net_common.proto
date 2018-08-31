@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package bgame.common.message;
+
+message set_value
+{
+	int32 value = 1;
+}
+
+message add_value
+{
+	int32 add_value = 2;
+}

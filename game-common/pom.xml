@@ -4,4 +4,12 @@
   <artifactId>game-common</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>game-common</name>
+  
+  <dependencies>
+	<dependency>
+    	<groupId>com.google.protobuf</groupId>
+    	<artifactId>protobuf-java</artifactId>
+    	<version>3.5.1</version>
+	</dependency>
+  </dependencies>
 </project>
