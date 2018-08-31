@@ -2,10 +2,12 @@ package bgame.db;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import bestan.common.log.Glog;
 import bestan.common.lua.LuaConfigs;
 import bestan.common.message.MessageFactory;
 import bestan.common.module.IModule;
 import bestan.common.module.ModuleManager;
+import bestan.common.net.server.BaseNetServerManager;
 import bestan.common.thread.BThreadPoolExecutors;
 import bestan.common.timer.BTimer.TimerModule;
 import bgame.common.message.GameMessageEnum;
@@ -28,16 +30,33 @@ public class MainServer {
 				new TimerModule(),		//定时器模块
 				new MessageFactory(),	//消息模块
 		};
+		var netServer = new BaseNetServerManager(cfg.serverCfg);
 		ModuleManager.register(modules);
-		ModuleManager.startup(cfg);
+		try
+		{
+			netServer.start();
+			ModuleManager.startup(cfg);
+		} catch (Exception e) {
+			Glog.error("gamedb start failed:message=", e.getMessage());
+			return;
+		}
+
 		while (runState.get()) {
 			try {
 				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (Exception e) {
+				Glog.error("gamedb:run error:message={}", e.getMessage());
+				break;
 			}
 		}
+		
+		try {
+			netServer.stop();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		ModuleManager.close();
 	}
 }
