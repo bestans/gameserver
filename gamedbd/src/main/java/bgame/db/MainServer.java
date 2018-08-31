@@ -2,15 +2,15 @@ package bgame.db;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import bestan.common.db.util.DBModule;
 import bestan.common.log.Glog;
 import bestan.common.lua.LuaConfigs;
 import bestan.common.message.MessageFactory;
 import bestan.common.module.IModule;
 import bestan.common.module.ModuleManager;
 import bestan.common.net.server.BaseNetServerManager;
-import bestan.common.thread.BThreadPoolExecutors;
 import bestan.common.timer.BTimer.TimerModule;
-import bgame.common.message.GameMessageEnum;
+import bgame.db.config.server.DBConfig;
 import bgame.db.config.server.DBServerConfig;
 
 public class MainServer {
@@ -20,24 +20,27 @@ public class MainServer {
 		LuaConfigs.loadConfig("bestan.db.config");
 		
 		var cfg = DBServerConfig.getInstance();
+		var dbConfig = LuaConfigs.get(DBConfig.class);
+		if (dbConfig == null) {
+			Glog.error("start failed.dbConfig is null");
+			return;
+		}
+
+		var dbCommonModule = new DBCommonModule();	//服务器通用模块
+		var timerModule = new TimerModule();		//定时器模块
+		var messageModule = new MessageFactory();	//消息模块
+		var netServerModule = new BaseNetServerManager(cfg.serverCfg);	//网络server
+		var dbModule = new DBModule(dbConfig);		//db数据库
 		
-		//创建工作线程
-		cfg.workExecutor = BThreadPoolExecutors.newMutipleSingleThreadPool("db_workpool", cfg.nThreadPool);
-		//指定消息索引类
-		cfg.messageIndex = GameMessageEnum.class;
-		
-		IModule[] modules = {
-				new TimerModule(),		//定时器模块
-				new MessageFactory(),	//消息模块
+		IModule[] startModules = {
+				dbCommonModule, timerModule, messageModule, dbModule, netServerModule, 
 		};
-		var netServer = new BaseNetServerManager(cfg.serverCfg);
-		ModuleManager.register(modules);
-		try
-		{
-			netServer.start();
-			ModuleManager.startup(cfg);
-		} catch (Exception e) {
-			Glog.error("gamedb start failed:message=", e.getMessage());
+		IModule[] closeModules = {
+				netServerModule, dbModule, messageModule, timerModule, dbCommonModule,
+		};
+		ModuleManager.register(startModules, closeModules);
+		if (!ModuleManager.startup(cfg)) {
+			ModuleManager.close();
 			return;
 		}
 
@@ -49,14 +52,7 @@ public class MainServer {
 				break;
 			}
 		}
-		
-		try {
-			netServer.stop();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+
 		ModuleManager.close();
 	}
 }
