@@ -9,26 +9,26 @@ import bgame.db.config.server.DBServerConfig;
 
 public class DBCommonModule implements IModule {
 	private DBServerConfig dbServerCfg;
-	public DBCommonModule() {
+	public DBCommonModule(DBServerConfig dbServerCfg) {
+		this.dbServerCfg = dbServerCfg;
 	}
 	
 	@Override
 	public void startup(ServerConfig config) throws Exception {
-		dbServerCfg = (DBServerConfig) config;
 		//创建工作线程
-		dbServerCfg.workExecutor = BThreadPoolExecutors.newMutipleSingleThreadPool("db_workpool", dbServerCfg.nThreadPool);
+		config.workExecutor = BThreadPoolExecutors.newMutipleSingleThreadPool("db_workpool", dbServerCfg.nThreadPool);
 		//指定消息索引类
-		dbServerCfg.messageIndex = GameMessageEnum.class;
+		config.messageIndex = GameMessageEnum.class;
 	}
 	
 	@Override
 	public void close() throws Exception {
-		dbServerCfg.workExecutor.shutdown();
+		dbServerCfg.netServerCfg.workdExecutor.shutdown();
 		int waitSecs = 3;	//3秒
 		for (int i = 0; i < waitSecs; ++i) {
 			Glog.info("wait workExecutor close, left {} second", waitSecs - i);
-			Thread.sleep(3);
+			Thread.sleep(1000);
 		}
-		dbServerCfg.workExecutor.shutdownNow();
+		dbServerCfg.netServerCfg.workdExecutor.shutdownNow();
 	}
 }

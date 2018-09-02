@@ -1,11 +1,13 @@
 package bgame.db.config.server;
 
 import bestan.common.logic.ServerConfig;
+import bestan.common.lua.BaseLuaConfig;
 import bestan.common.net.server.NetServerConfig;
 
-public class DBServerConfig extends ServerConfig {
+public class DBServerConfig extends BaseLuaConfig {
+	public ServerConfig serverConfig;
 	public int nThreadPool;
-	public NetServerConfig serverCfg;
+	public NetServerConfig netServerCfg;
 	
 	private static DBServerConfig instance;
 	public static DBServerConfig getInstance() {
