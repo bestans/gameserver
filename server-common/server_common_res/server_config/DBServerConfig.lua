@@ -20,7 +20,7 @@ local serverConfig =
 
 local netServerCfg=
 {
-	serverName = "TestServer",
+	serverName = "DBServer",
 	bossGroupThreadCount = 1,
 	workerGroupThreadCount = 1,
 	serverIP = "127.0.0.1",
