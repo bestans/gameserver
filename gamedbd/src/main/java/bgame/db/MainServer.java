@@ -53,7 +53,7 @@ public class MainServer {
 				System.out.println(BTimer.getTime());
 				Thread.sleep(1000);
 			} catch (Exception e) {
-				Glog.error("gamedb:run error:message={}", e.getMessage());
+				Glog.error("gamedb:run error:message={},cause={}", e.getMessage(), e.getCause());
 				break;
 			}
 		}

@@ -2,6 +2,8 @@ package bgame.gs;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import com.google.protobuf.ByteString;
+
 import bestan.common.log.Glog;
 import bestan.common.lua.LuaConfigs;
 import bestan.common.message.MessageFactory.MessageModule;
@@ -10,12 +12,12 @@ import bestan.common.module.ModuleManager;
 import bestan.common.net.CommonProtocol;
 import bestan.common.net.client.BaseNetClientManager;
 import bestan.common.net.server.BaseNetServerManager;
-import bestan.common.timer.BTimer;
 import bestan.common.timer.BTimer.TimerModule;
 import bgame.common.message.GameMessageEnum;
+import bgame.common.message.NetCommon.TestRegister;
 import bgame.gs.config.server.GSServerConfig;
 
-public class MainServer {
+public class MainGSServer {
 	private static AtomicBoolean runState = new AtomicBoolean(true);
 	
 	public static void main(String[] args) {
@@ -40,12 +42,15 @@ public class MainServer {
 			return;
 		}
 
+		var builder = TestRegister.newBuilder();
+		builder.setMsg(ByteString.copyFromUtf8("aaaa"));
 		while (runState.get()) {
 			try {
-				System.out.println(BTimer.getTime());
+				//System.out.println(BTimer.getTime());
 				Thread.sleep(1000);
+				dbClientModule.sendMessage(builder.build());
 			} catch (Exception e) {
-				Glog.error("gamedb:run error:message={}", e.getMessage());
+				Glog.error("gs:run error:message={},cause={}", e.getMessage(), e.getCause());
 				break;
 			}
 		}
