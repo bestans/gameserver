@@ -1,22 +1,23 @@
-package bgame.gs;
+package bgame.db;
 
 import bestan.common.log.Glog;
 import bestan.common.module.IModule;
 import bestan.common.thread.BThreadPoolExecutors;
-import bgame.gs.config.server.GSServerConfig;
+import bgame.db.config.server.DBServerConfig;
 
-public class GSCommonModule implements IModule {
-	private GSServerConfig dbServerCfg;
-	public GSCommonModule(GSServerConfig dbServerCfg) {
+public class DBServerModule implements IModule {
+	private DBServerConfig dbServerCfg;
+	public DBServerModule(DBServerConfig dbServerCfg) {
 		this.dbServerCfg = dbServerCfg;
 		//创建工作线程
-		this.dbServerCfg.workExecutor = BThreadPoolExecutors.newMutipleSingleThreadPool("gs_workpool", dbServerCfg.nThreadPool);
+		dbServerCfg.workExecutor = BThreadPoolExecutors.newMutipleSingleThreadPool("db_workpool", dbServerCfg.nThreadPool);
 	}
-
+	
 	@Override
 	public void startup() throws Exception {
 	}
 	
+	@Override
 	public void close() throws Exception {
 		dbServerCfg.workExecutor.shutdown();
 		int waitSecs = 3;	//3秒

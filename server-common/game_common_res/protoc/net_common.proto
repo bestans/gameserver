@@ -11,3 +11,8 @@ message add_value
 {
 	int32 add_value = 2;
 }
+
+message TestRegister
+{
+	bytes msg	= 1;
+}

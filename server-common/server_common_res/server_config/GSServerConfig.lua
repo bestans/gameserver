@@ -18,13 +18,26 @@ local serverConfig =
 	messageHandlerPackage = "",	
 }
 
+local dbNetClientConfig=
+{
+	clientName = "gsDBClient",
+	
+	bossGroupThreadCount = 1,
+	
+	workerGroupThreadCount = 1,
+	
+	serverIP = "127.0.0.1",
+	
+	serverPort = 1019,
+}
+
 local netServerCfg=
 {
-	serverName = "DBServer",
+	serverName = "GSServer",
 	bossGroupThreadCount = 1,
 	workerGroupThreadCount = 1,
 	serverIP = "127.0.0.1",
-	serverPort = 1019,
+	serverPort = 1020,
 	--serverchanel(用来监听和接受连接)的接收缓冲区大小
 	optionRcvbuf = 64 * KB,
 	--serverchanel(用来监听和接受连接)的发送缓冲区大小
@@ -37,7 +50,13 @@ local netServerCfg=
 
 local config = 
 {
+	--通用配置
 	serverConfig = serverConfig,
+	
+	--连接DB服务器的client
+	dbNetClientConfig = dbNetClientConfig,
+	
+	--GS服务器配置
 	netServerCfg = netServerCfg,
 	
 	--工作线程池数量
@@ -50,7 +69,7 @@ local config =
 	messagePackages = { "bgame.common.message" },
 	
 	--消息处理包列表
-	messageHandlerPackages = { " " },
+	messageHandlerPackages = { "" },
 	
 	
 }

@@ -5,4 +5,5 @@ public enum GameMessageEnum {
 	INVALID,
 	set_value,		//1
 	add_value,		//2
+	TestRegister,		//3
 }
