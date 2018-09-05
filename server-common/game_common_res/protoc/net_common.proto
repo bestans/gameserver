@@ -16,3 +16,13 @@ message TestRegister
 {
 	bytes msg	= 1;
 }
+
+message RpcTest
+{
+	int32 arg = 1;
+}
+
+message RpcTestRes
+{
+	int32 value = 2;
+}

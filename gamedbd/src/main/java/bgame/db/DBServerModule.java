@@ -1,6 +1,7 @@
 package bgame.db;
 
 import bestan.common.log.Glog;
+import bestan.common.logic.Gmatrix;
 import bestan.common.module.IModule;
 import bestan.common.thread.BThreadPoolExecutors;
 import bgame.db.config.server.DBServerConfig;
@@ -15,6 +16,7 @@ public class DBServerModule implements IModule {
 	
 	@Override
 	public void startup() throws Exception {
+		Gmatrix.getInstance().setServerConfig(dbServerCfg.serverConfig);
 	}
 	
 	@Override

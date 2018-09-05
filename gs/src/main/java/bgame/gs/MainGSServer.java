@@ -10,12 +10,15 @@ import bestan.common.message.MessageFactory.MessageModule;
 import bestan.common.module.IModule;
 import bestan.common.module.ModuleManager;
 import bestan.common.net.CommonProtocol;
-import bestan.common.net.client.BaseNetClientManager;
+import bestan.common.net.INetManager;
 import bestan.common.net.server.BaseNetServerManager;
 import bestan.common.timer.BTimer.TimerModule;
 import bgame.common.message.GameMessageEnum;
+import bgame.common.message.NetCommon.RpcTest;
+import bgame.common.message.NetCommon.RpcTestRes;
 import bgame.common.message.NetCommon.TestRegister;
 import bgame.gs.config.server.GSServerConfig;
+import bgame.gs.net.DBNetClient;
 
 public class MainGSServer {
 	private static AtomicBoolean runState = new AtomicBoolean(true);
@@ -28,7 +31,7 @@ public class MainGSServer {
 		var gsCommonModule = new GSCommonModule(cfg);	//服务器通用模块
 		var timerModule = new TimerModule(cfg.workExecutor, cfg.timerIickInterval);		//定时器模块
 		var messageModule = new MessageModule(GameMessageEnum.class, cfg.messagePackages, cfg.messageHandlerPackages);	//消息模块
-		var dbClientModule = new BaseNetClientManager(cfg.dbNetClientConfig, cfg.workExecutor, new CommonProtocol());	//网络server
+		var dbClientModule = new DBNetClient(cfg.dbNetClientConfig, cfg.workExecutor, new CommonProtocol());	//网络server
 		var gsServerModule = new BaseNetServerManager(cfg.netServerCfg, cfg.workExecutor, new CommonProtocol()); 		//GS服务器
 		IModule[] startModules = {
 				gsCommonModule, timerModule, messageModule, dbClientModule, gsServerModule,
@@ -44,11 +47,14 @@ public class MainGSServer {
 
 		var builder = TestRegister.newBuilder();
 		builder.setMsg(ByteString.copyFromUtf8("aaaa"));
+		
+		var arg = RpcTest.newBuilder();
+		arg.setArg(100);
 		while (runState.get()) {
 			try {
-				//System.out.println(BTimer.getTime());
 				Thread.sleep(1000);
-				dbClientModule.sendMessage(builder.build());
+				//DBNetClient.getInstance().sendMessage(builder.build());
+				INetManager.sendRpc(DBNetClient.getInstance().GetChannel(), arg.build(), RpcTestRes.class);
 			} catch (Exception e) {
 				Glog.error("gs:run error:message={},cause={}", e.getMessage(), e.getCause());
 				break;

@@ -6,4 +6,6 @@ public enum GameMessageEnum {
 	set_value,		//1
 	add_value,		//2
 	TestRegister,		//3
+	RpcTest,		//4
+	RpcTestRes,		//5
 }

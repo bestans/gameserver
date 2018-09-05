@@ -23,7 +23,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="E:/bestan/source/jar/bestan-common.jar"/>
+	<classpathentry kind="lib" path="E:/bestan/source/jar/bestan-common.jar" sourcepath="E:/bestan/bestan-common"/>
 	<classpathentry kind="lib" path="E:/bestan/source/jar/bestan-log.jar"/>
 	<classpathentry kind="lib" path="E:/bestan/source/jar/rocksdbjni-jdk10-vs2007-20180706.jar"/>
 	<classpathentry kind="lib" path="E:/bestan/source/jar/slf4j-api-1.8.0-alpha2.jar"/>

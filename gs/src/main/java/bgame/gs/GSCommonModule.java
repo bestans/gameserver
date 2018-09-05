@@ -1,6 +1,7 @@
 package bgame.gs;
 
 import bestan.common.log.Glog;
+import bestan.common.logic.Gmatrix;
 import bestan.common.module.IModule;
 import bestan.common.thread.BThreadPoolExecutors;
 import bgame.gs.config.server.GSServerConfig;
@@ -15,6 +16,7 @@ public class GSCommonModule implements IModule {
 
 	@Override
 	public void startup() throws Exception {
+		Gmatrix.getInstance().setServerConfig(dbServerCfg.serverConfig);
 	}
 	
 	public void close() throws Exception {
