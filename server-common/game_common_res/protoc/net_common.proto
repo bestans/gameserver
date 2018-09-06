@@ -26,3 +26,8 @@ message RpcTestRes
 {
 	int32 value = 2;
 }
+
+message DBSetValue
+{
+
+}
