@@ -3,8 +3,8 @@ package bgame.db.net.handler;
 import com.google.protobuf.Message;
 import com.google.protobuf.Message.Builder;
 
-import bestan.common.message.IRpcServerHandler;
 import bestan.common.net.AbstractProtocol;
+import bestan.common.net.handler.IRpcServerHandler;
 import bgame.common.message.NetCommon.RpcTest;
 import bgame.common.message.NetCommon.RpcTestRes;
 

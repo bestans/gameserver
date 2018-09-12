@@ -50,9 +50,7 @@ local config =
 	messagePackages = { "bgame.common.message" },
 	
 	--消息处理包列表
-	messageHandlerPackages = { "bgame.db.net.handler" },
-	
-	
+	messageHandlerPackages = { "bgame.db.net.handler", "bestan.common.db.handler" },
 }
 
 return config

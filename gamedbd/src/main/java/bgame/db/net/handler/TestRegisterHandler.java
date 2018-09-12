@@ -1,8 +1,8 @@
 package bgame.db.net.handler;
 
 import bestan.common.log.Glog;
-import bestan.common.message.IMessageHandler;
 import bestan.common.net.AbstractProtocol;
+import bestan.common.net.handler.IMessageHandler;
 import bgame.common.message.NetCommon.TestRegister;
 
 public class TestRegisterHandler implements IMessageHandler {

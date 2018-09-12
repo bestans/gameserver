@@ -10,7 +10,6 @@ import bestan.common.message.MessageFactory.MessageModule;
 import bestan.common.module.IModule;
 import bestan.common.module.ModuleManager;
 import bestan.common.net.CommonProtocol;
-import bestan.common.net.INetManager;
 import bestan.common.net.server.BaseNetServerManager;
 import bestan.common.timer.BTimer.TimerModule;
 import bgame.common.message.GameMessageEnum;
@@ -54,7 +53,7 @@ public class MainGSServer {
 			try {
 				Thread.sleep(1000);
 				//DBNetClient.getInstance().sendMessage(builder.build());
-				INetManager.sendRpc(DBNetClient.getInstance().GetChannel(), arg.build(), RpcTestRes.class);
+				DBNetClient.getInstance().sendRpc(arg.build(), RpcTestRes.class);
 			} catch (Exception e) {
 				Glog.error("gs:run error:message={},cause={}", e.getMessage(), e.getCause());
 				break;
