@@ -14,10 +14,10 @@ import bestan.common.net.server.BaseNetServerManager;
 import bestan.common.timer.BTimer.TimerModule;
 import bgame.common.message.GameMessageEnum;
 import bgame.common.message.NetCommon.RpcTest;
-import bgame.common.message.NetCommon.RpcTestRes;
 import bgame.common.message.NetCommon.TestRegister;
 import bgame.gs.config.server.GSServerConfig;
 import bgame.gs.net.DBNetClient;
+import bgame.gs.test.TestManager;
 
 public class MainGSServer {
 	private static AtomicBoolean runState = new AtomicBoolean(true);
@@ -53,9 +53,10 @@ public class MainGSServer {
 			try {
 				Thread.sleep(1000);
 				//DBNetClient.getInstance().sendMessage(builder.build());
-				DBNetClient.getInstance().sendRpc(arg.build(), RpcTestRes.class);
+				//DBNetClient.getInstance().sendRpc(arg.build(), RpcTestRes.class);
+				TestManager.getInstance().test1(DBNetClient.getInstance());
 			} catch (Exception e) {
-				Glog.error("gs:run error:message={},cause={}", e.getMessage(), e.getCause());
+				Glog.error("gs:run error:message={},cause={}", e.getMessage(), e.getStackTrace());
 				break;
 			}
 		}

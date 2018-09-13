@@ -8,4 +8,5 @@ public enum GameMessageEnum {
 	TestRegister,		//3
 	RpcTest,		//4
 	RpcTestRes,		//5
+	DBTestTable,		//6
 }

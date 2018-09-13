@@ -10,9 +10,10 @@ local config =
     
     --数据库表
     --key：表名
-    --value：keyType指key类型，valueType指value类型，valueName和keyName仅在类型为message时有效
+    --value：keyType指key类型，valueType指value类型，valueName和keyName仅在类型为MESSAGE时有效
     tables = {
 		player = { keyType = "INT", valueType = "INT" },
+		test = { keyType = "INT", valueType = "MESSAGE", valueName = "DBTestTable" },
     },
     
     --检查table解析的message是否有效

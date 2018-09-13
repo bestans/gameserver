@@ -27,7 +27,7 @@ message RpcTestRes
 	int32 value = 2;
 }
 
-message DBSetValue
+message DBTestTable
 {
-
+	int32 value = 1;
 }
