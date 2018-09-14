@@ -3,8 +3,10 @@ package bgame.gs.test;
 import bestan.common.log.Glog;
 import bestan.common.logic.BaseManager;
 import bestan.common.net.client.BaseNetClientManager;
+import bestan.common.net.operation.CommonLoadParam;
 import bestan.common.net.operation.CommonSaveParam;
 import bestan.common.net.operation.DBOperationUtil;
+import bestan.common.timer.BTimer;
 import bgame.common.message.NetCommon.DBTestTable;
 
 public class TestManager extends BaseManager {
@@ -22,11 +24,18 @@ public class TestManager extends BaseManager {
 	
 	public void test1(BaseNetClientManager net) {
 		var data  = DBTestTable.newBuilder();
-		data.setValue(1314);
+		//var data = RpcTest.newBuilder();
+		data.setValue((int)BTimer.getTime());
 		if (net.GetChannel() == null) {
 			Glog.debug("nulllllllllllll");
 			return;
 		}
-		DBOperationUtil.RpcCommonSave(net, net.GetChannel(), "test", Integer.valueOf(100), data.build(), new CommonSaveParam(1, guid));
+		Glog.debug("test1 start:value={}", (int)BTimer.getTime());
+		DBOperationUtil.rpcCommonSave(net, net.GetChannel(), "test", Integer.valueOf(100), data.build(), new CommonSaveParam(1, guid));
+		//DBOperationUtil.rpcCommonLoad(net, net.GetChannel(), "test", Integer.valueOf(100), new CommonLoadParam(2, guid));
+	}
+
+	public void test2(BaseNetClientManager net) {
+		DBOperationUtil.rpcCommonLoad(net, net.GetChannel(), "test", Integer.valueOf(100), new CommonLoadParam(2, guid));
 	}
 }

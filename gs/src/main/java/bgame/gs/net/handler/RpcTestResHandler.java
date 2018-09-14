@@ -19,7 +19,7 @@ public class RpcTestResHandler implements IRpcClientHandler {
 	}
 	
 	@Override
-	public void OnTimeout(AbstractProtocol protocol, RpcObject rpc, Message arg, Object param) {
+	public void OnTimeout(RpcObject rpc, Message arg, Object param) {
 		Glog.debug("RpcTestHandler:timeout:arg={}", arg);
 	}
 }
