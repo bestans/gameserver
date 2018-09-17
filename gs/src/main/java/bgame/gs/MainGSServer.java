@@ -57,6 +57,7 @@ public class MainGSServer {
 				TestManager.getInstance().test1(DBNetClient.getInstance());
 
 				Thread.sleep(20000);
+				break;
 			} catch (Exception e) {
 				Glog.error("gs:run error:message={},cause={}", e.getMessage(), e.getStackTrace());
 				break;
