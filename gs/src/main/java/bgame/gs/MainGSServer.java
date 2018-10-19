@@ -39,7 +39,7 @@ public class MainGSServer {
 				gsServerModule, dbClientModule, messageModule, timerModule, gsCommonModule,
 		};
 		ModuleManager.register(startModules, closeModules);
-		if (!ModuleManager.startup(cfg.serverConfig)) {
+		if (!ModuleManager.startup()) {
 			ModuleManager.close();
 			return;
 		}

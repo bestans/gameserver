@@ -42,7 +42,7 @@ public class MainServer {
 				netServerModule, dbModule, messageModule, timerModule, dbCommonModule,
 		};
 		ModuleManager.register(startModules, closeModules);
-		if (!ModuleManager.startup(cfg.serverConfig)) {
+		if (!ModuleManager.startup()) {
 			ModuleManager.close();
 			return;
 		}
